@@ -6,10 +6,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.annotation.DirtiesContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class EntityManagerTest {
 
     @PersistenceContext
@@ -34,7 +36,7 @@ public class EntityManagerTest {
      */
     @Test
     void flush() {
-        String sqlForSelectCustomer = "select * from customer where id = 1";
+        String sqlForSelectCustomer = "select * from customer where id = 1L";
 
         Customer customer = new Customer("Jack", "Bauer");
         entityManager.persist(customer);
